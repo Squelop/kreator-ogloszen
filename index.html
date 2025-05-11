@@ -3,9 +3,9 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8" />
-  <title>Generator Ogłoszeń Samochodowych</title>
+  <title>Zaawansowany Generator Ogłoszeń Samochodowych</title>
   <style>
-    body { font-family: sans-serif; max-width: 700px; margin: auto; padding: 20px; }
+    body { font-family: sans-serif; max-width: 800px; margin: auto; padding: 20px; }
     input, select, textarea { width: 100%; margin: 6px 0; padding: 8px; }
     label { font-weight: bold; margin-top: 10px; display: block; }
     .checkbox-group { display: flex; flex-wrap: wrap; gap: 10px; }
@@ -14,7 +14,7 @@
   </style>
 </head>
 <body>
-  <h2>Generator Ogłoszenia Samochodowego</h2>
+  <h2>Zaawansowany Generator Ogłoszenia Samochodowego</h2>
 
   <label>Marka:</label>
   <input type="text" id="marka">
@@ -68,12 +68,12 @@
 
   <label>Wyposażenie:</label>
   <div class="checkbox-group">
-    <label><input type="checkbox" value="Klimatyzacja"> Klimatyzacja</label>
-    <label><input type="checkbox" value="Tempomat"> Tempomat</label>
-    <label><input type="checkbox" value="Nawigacja GPS"> Nawigacja</label>
-    <label><input type="checkbox" value="Podgrzewane fotele"> Podgrzewane fotele</label>
-    <label><input type="checkbox" value="Czujniki parkowania"> Czujniki parkowania</label>
-    <label><input type="checkbox" value="Skórzana tapicerka"> Skórzana tapicerka</label>
+    <label><input type="checkbox" value="klimatyzacja"> Klimatyzacja</label>
+    <label><input type="checkbox" value="tempomat"> Tempomat</label>
+    <label><input type="checkbox" value="nawigacja GPS"> Nawigacja</label>
+    <label><input type="checkbox" value="podgrzewane fotele"> Podgrzewane fotele</label>
+    <label><input type="checkbox" value="czujniki parkowania"> Czujniki parkowania</label>
+    <label><input type="checkbox" value="skórzana tapicerka"> Skórzana tapicerka</label>
   </div>
 
   <label>Opis serwisowania (opcjonalnie):</label>
@@ -81,6 +81,13 @@
 
   <label>Cena (zł):</label>
   <input type="number" id="cena">
+
+  <label>Styl ogłoszenia:</label>
+  <select id="styl">
+    <option value="standard">Standardowy</option>
+    <option value="profesjonalny">Profesjonalny</option>
+    <option value="emocjonalny">Emocjonalny</option>
+  </select>
 
   <button onclick="generuj()">Generuj ogłoszenie</button>
 
@@ -100,24 +107,46 @@
       const stan = document.getElementById("stan").value;
       const cena = document.getElementById("cena").value;
       const serwis = document.getElementById("serwis").value;
+      const styl = document.getElementById("styl").value;
 
       const checkboxy = document.querySelectorAll('.checkbox-group input[type="checkbox"]');
       const wyposazenie = Array.from(checkboxy)
         .filter(cb => cb.checked)
         .map(cb => cb.value);
 
-      const tekst = `**${marka} ${model}, ${rok}, ${paliwo}, ${przebieg} km**
+      let tekst = "";
+
+      if (styl === "standard") {
+        tekst = `**${marka} ${model}, ${rok}, ${paliwo}, ${przebieg} km**
 
 Na sprzedaż ${marka} ${model} (${nadwozie.toLowerCase()}) z ${rok} roku, kolor: ${kolor}.  
-Silnik o mocy ${moc} KM, ${paliwo.toLowerCase()}, skrzynia ${skrzynia.toLowerCase()}.
+Silnik ${moc} KM, ${paliwo.toLowerCase()}, skrzynia ${skrzynia.toLowerCase()}.  
+Stan: ${stan.toLowerCase()}.
 
-Stan pojazdu: ${stan.toLowerCase()}.
-
-${wyposazenie.length > 0 ? 'Wyposażenie: ' + wyposazenie.join(', ') + '.' : ''}
+${wyposazenie.length ? 'Wyposażenie: ' + wyposazenie.join(', ') + '.' : ''}
 ${serwis ? 'Serwis: ' + serwis + '.' : ''}
 
 Cena: **${cena} zł**  
 Możliwość negocjacji.`;
+      } else if (styl === "profesjonalny") {
+        tekst = `${marka} ${model} z ${rok} roku – wersja ${nadwozie}, kolor: ${kolor}, w bardzo dobrym stanie technicznym i wizualnym.  
+Auto wyposażone w ${moc} KM silnik ${paliwo.toLowerCase()}, skrzynia ${skrzynia.toLowerCase()}, przebieg ${przebieg} km.
+
+Na pokładzie m.in.: ${wyposazenie.join(', ') || 'podstawowe wyposażenie'}.  
+${serwis ? 'Historia serwisowa: ' + serwis + '.' : ''}
+
+Propozycja ceny: ${cena} zł – zapraszam do kontaktu.`;
+      } else if (styl === "emocjonalny") {
+        tekst = `Sprzedaję ukochane auto – ${marka} ${model}, które wiernie służyło mi od ${rok} roku.  
+To niezawodny kompan podróży, z silnikiem ${moc} KM (${paliwo}), przebiegiem ${przebieg} km i ${skrzynia.toLowerCase()} skrzynią.
+
+Auto w ${stan.toLowerCase()}m stanie, gotowe do nowych przygód.  
+Ma ${nadwozie.toLowerCase()} nadwozie w pięknym kolorze: ${kolor}.  
+${wyposazenie.length ? 'Wyposażone m.in. w: ' + wyposazenie.join(', ') + '.' : ''}
+${serwis ? 'Dbane na bieżąco – ' + serwis + '.' : ''}
+
+Cena: ${cena} zł – do negocjacji dla zdecydowanego kupca.`;
+      }
 
       document.getElementById("wynik").value = tekst;
     }
