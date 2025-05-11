@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Generator Ogłoszeń Samochodowych</title>
+  <style>
+    body { font-family: sans-serif; max-width: 700px; margin: auto; padding: 20px; }
+    input, select, textarea { width: 100%; margin: 6px 0; padding: 8px; }
+    label { font-weight: bold; margin-top: 10px; display: block; }
+    .checkbox-group { display: flex; flex-wrap: wrap; gap: 10px; }
+    .checkbox-group label { font-weight: normal; }
+    button { padding: 10px 20px; font-size: 16px; margin-top: 16px; }
+  </style>
+</head>
+<body>
+  <h2>Generator Ogłoszenia Samochodowego</h2>
+
+  <label>Marka:</label>
+  <input type="text" id="marka">
+
+  <label>Model:</label>
+  <input type="text" id="model">
+
+  <label>Rok produkcji:</label>
+  <input type="number" id="rok">
+
+  <label>Rodzaj paliwa:</label>
+  <select id="paliwo">
+    <option>Benzyna</option>
+    <option>Diesel</option>
+    <option>LPG</option>
+    <option>Hybryda</option>
+    <option>Elektryczny</option>
+  </select>
+
+  <label>Przebieg (km):</label>
+  <input type="number" id="przebieg">
+
+  <label>Moc (KM):</label>
+  <input type="number" id="moc">
+
+  <label>Skrzynia biegów:</label>
+  <select id="skrzynia">
+    <option>Manualna</option>
+    <option>Automatyczna</option>
+  </select>
+
+  <label>Typ nadwozia:</label>
+  <select id="nadwozie">
+    <option>Hatchback</option>
+    <option>Sedan</option>
+    <option>Kombi</option>
+    <option>SUV</option>
+    <option>Coupe</option>
+    <option>Inne</option>
+  </select>
+
+  <label>Kolor nadwozia:</label>
+  <input type="text" id="kolor">
+
+  <label>Stan ogólny:</label>
+  <select id="stan">
+    <option>Bardzo dobry</option>
+    <option>Dobry</option>
+    <option>Do poprawek</option>
+  </select>
+
+  <label>Wyposażenie:</label>
+  <div class="checkbox-group">
+    <label><input type="checkbox" value="Klimatyzacja"> Klimatyzacja</label>
+    <label><input type="checkbox" value="Tempomat"> Tempomat</label>
+    <label><input type="checkbox" value="Nawigacja GPS"> Nawigacja</label>
+    <label><input type="checkbox" value="Podgrzewane fotele"> Podgrzewane fotele</label>
+    <label><input type="checkbox" value="Czujniki parkowania"> Czujniki parkowania</label>
+    <label><input type="checkbox" value="Skórzana tapicerka"> Skórzana tapicerka</label>
+  </div>
+
+  <label>Opis serwisowania (opcjonalnie):</label>
+  <input type="text" id="serwis" placeholder="np. wymieniony rozrząd przy 150 tys.">
+
+  <label>Cena (zł):</label>
+  <input type="number" id="cena">
+
+  <button onclick="generuj()">Generuj ogłoszenie</button>
+
+  <textarea id="wynik" readonly></textarea>
+
+  <script>
+    function generuj() {
+      const marka = document.getElementById("marka").value;
+      const model = document.getElementById("model").value;
+      const rok = document.getElementById("rok").value;
+      const paliwo = document.getElementById("paliwo").value;
+      const przebieg = document.getElementById("przebieg").value;
+      const moc = document.getElementById("moc").value;
+      const skrzynia = document.getElementById("skrzynia").value;
+      const nadwozie = document.getElementById("nadwozie").value;
+      const kolor = document.getElementById("kolor").value;
+      const stan = document.getElementById("stan").value;
+      const cena = document.getElementById("cena").value;
+      const serwis = document.getElementById("serwis").value;
+
+      const checkboxy = document.querySelectorAll('.checkbox-group input[type="checkbox"]');
+      const wyposazenie = Array.from(checkboxy)
+        .filter(cb => cb.checked)
+        .map(cb => cb.value);
+
+      const tekst = `**${marka} ${model}, ${rok}, ${paliwo}, ${przebieg} km**
+
+Na sprzedaż ${marka} ${model} (${nadwozie.toLowerCase()}) z ${rok} roku, kolor: ${kolor}.  
+Silnik o mocy ${moc} KM, ${paliwo.toLowerCase()}, skrzynia ${skrzynia.toLowerCase()}.
+
+Stan pojazdu: ${stan.toLowerCase()}.
+
+${wyposazenie.length > 0 ? 'Wyposażenie: ' + wyposazenie.join(', ') + '.' : ''}
+${serwis ? 'Serwis: ' + serwis + '.' : ''}
+
+Cena: **${cena} zł**  
+Możliwość negocjacji.`;
+
+      document.getElementById("wynik").value = tekst;
+    }
+  </script>
+</body>
+</html>
