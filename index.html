@@ -82,7 +82,25 @@
   <label>Cena (zł):</label>
   <input type="number" id="cena">
 
+  
+  <label>Data pierwszej rejestracji:</label>
+  <input type="text" id="rejestracja" placeholder="np. 2016-05-12">
+
+  <label>Pochodzenie pojazdu:</label>
+  <select id="pochodzenie">
+    <option>Polski salon</option>
+    <option>Sprowadzony</option>
+  </select>
+
+  <label>Wypadkowość:</label>
+  <select id="wypadkowy">
+    <option>Bezwypadkowy</option>
+    <option>Po kolizji</option>
+    <option>Po wypadku</option>
+  </select>
+
   <label>Styl ogłoszenia:</label>
+    
   <select id="styl">
     <option value="standard">Standardowy</option>
     <option value="profesjonalny">Profesjonalny</option>
@@ -91,7 +109,7 @@
 
   <button onclick="generuj()">Generuj ogłoszenie</button>
 
-  <textarea id="wynik" readonly></textarea>
+  <textarea id="wynik" readonly style="height: 300px;"></textarea>
 
   <script>
     function generuj() {
