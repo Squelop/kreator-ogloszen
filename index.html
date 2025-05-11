@@ -3,18 +3,19 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8" />
-  <title>Zaawansowany Generator Ogłoszeń Samochodowych</title>
+  <title>Losowy Generator Ogłoszeń Samochodowych</title>
   <style>
-    body { font-family: sans-serif; max-width: 800px; margin: auto; padding: 20px; }
+    body { font-family: sans-serif; max-width: 900px; margin: auto; padding: 20px; }
     input, select, textarea { width: 100%; margin: 6px 0; padding: 8px; }
     label { font-weight: bold; margin-top: 10px; display: block; }
     .checkbox-group { display: flex; flex-wrap: wrap; gap: 10px; }
     .checkbox-group label { font-weight: normal; }
     button { padding: 10px 20px; font-size: 16px; margin-top: 16px; }
+    textarea { height: 400px; }
   </style>
 </head>
 <body>
-  <h2>Zaawansowany Generator Ogłoszenia Samochodowego</h2>
+  <h2>Losowy Generator Ogłoszenia Samochodowego</h2>
 
   <label>Marka:</label>
   <input type="text" id="marka">
@@ -68,6 +69,12 @@
 
   <label>Wyposażenie:</label>
   <div class="checkbox-group">
+    <label><input type="checkbox" value="automatyczna klimatyzacja"> Automatyczna klimatyzacja</label>
+    <label><input type="checkbox" value="światła LED"> Światła LED</label>
+    <label><input type="checkbox" value="kamera cofania"> Kamera cofania</label>
+    <label><input type="checkbox" value="asystent pasa ruchu"> Asystent pasa ruchu</label>
+    <label><input type="checkbox" value="system start-stop"> System start-stop</label>
+    <label><input type="checkbox" value="felgi aluminiowe"> Felgi aluminiowe</label>
     <label><input type="checkbox" value="klimatyzacja"> Klimatyzacja</label>
     <label><input type="checkbox" value="tempomat"> Tempomat</label>
     <label><input type="checkbox" value="nawigacja GPS"> Nawigacja</label>
@@ -79,10 +86,6 @@
   <label>Opis serwisowania (opcjonalnie):</label>
   <input type="text" id="serwis" placeholder="np. wymieniony rozrząd przy 150 tys.">
 
-  <label>Cena (zł):</label>
-  <input type="number" id="cena">
-
-  
   <label>Data pierwszej rejestracji:</label>
   <input type="text" id="rejestracja" placeholder="np. 2016-05-12">
 
@@ -99,72 +102,53 @@
     <option>Po wypadku</option>
   </select>
 
-  <label>Styl ogłoszenia:</label>
-    
-  <select id="styl">
-    <option value="standard">Standardowy</option>
-    <option value="profesjonalny">Profesjonalny</option>
-    <option value="emocjonalny">Emocjonalny</option>
-  </select>
-
   <button onclick="generuj()">Generuj ogłoszenie</button>
 
-  <textarea id="wynik" readonly style="height: 300px;"></textarea>
+  <textarea id="wynik" readonly></textarea>
 
   <script>
+    function losuj(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    const naglowki = ['Na sprzedaż wyjątkowo zadbany', 'Prezentuję niezawodny i komfortowy', 'Świetna okazja – oferuję', 'Sprzedam ekonomiczny i funkcjonalny', 'Zadbany egzemplarz', 'Auto godne polecenia', 'Doskonale utrzymany', 'Pojazd w bardzo dobrym stanie', 'Bezproblemowe auto gotowe do jazdy', 'Wyjątkowy model, idealny dla rodziny', 'Sprawdzony w trasie i w mieście', 'Auto z pewną historią', 'Egzemplarz bez ukrytych wad', 'Model z dobrym wyposażeniem', 'Ekonomiczne i praktyczne auto', 'Auto pochodzące z polskiego salonu', 'Użytkowany przez jednego właściciela', 'Samochód bezwypadkowy i sprawny', 'Atrakcyjna propozycja dla wymagających', 'Komfortowy samochód w dobrej cenie', 'Na sprzedaż wyjątkowo zadbany', 'Prezentuję niezawodny i komfortowy', 'Świetna okazja – oferuję', 'Sprzedam ekonomiczny i funkcjonalny', 'Zadbany egzemplarz', 'Auto godne polecenia', 'Doskonale utrzymany', 'Pojazd w bardzo dobrym stanie', 'Bezproblemowe auto gotowe do jazdy', 'Wyjątkowy model, idealny dla rodziny', 'Sprawdzony w trasie i w mieście', 'Auto z pewną historią', 'Egzemplarz bez ukrytych wad', 'Model z dobrym wyposażeniem', 'Ekonomiczne i praktyczne auto', 'Auto pochodzące z polskiego salonu', 'Użytkowany przez jednego właściciela', 'Samochód bezwypadkowy i sprawny', 'Atrakcyjna propozycja dla wymagających', 'Komfortowy samochód w dobrej cenie'], (_, i) => `Opcja nagłówka nr ${i + 1}`);
+    const opisySilnika = [<function <lambda> at 0x7ea3142a7a90>, <function <lambda> at 0x7ea3142a7090>, <function <lambda> at 0x7ea3142a7590>, <function <lambda> at 0x7ea3142a8530>, <function <lambda> at 0x7ea3142a85d0>, <function <lambda> at 0x7ea3142a7a90>, <function <lambda> at 0x7ea3142a7090>, <function <lambda> at 0x7ea3142a7590>, <function <lambda> at 0x7ea3142a8530>, <function <lambda> at 0x7ea3142a85d0>, <function <lambda> at 0x7ea3142a7a90>, <function <lambda> at 0x7ea3142a7090>, <function <lambda> at 0x7ea3142a7590>, <function <lambda> at 0x7ea3142a8530>, <function <lambda> at 0x7ea3142a85d0>, <function <lambda> at 0x7ea3142a7a90>, <function <lambda> at 0x7ea3142a7090>, <function <lambda> at 0x7ea3142a7590>, <function <lambda> at 0x7ea3142a8530>, <function <lambda> at 0x7ea3142a85d0>, <function <lambda> at 0x7ea3142a7a90>, <function <lambda> at 0x7ea3142a7090>, <function <lambda> at 0x7ea3142a7590>, <function <lambda> at 0x7ea3142a8530>, <function <lambda> at 0x7ea3142a85d0>, <function <lambda> at 0x7ea3142a7a90>, <function <lambda> at 0x7ea3142a7090>, <function <lambda> at 0x7ea3142a7590>, <function <lambda> at 0x7ea3142a8530>, <function <lambda> at 0x7ea3142a85d0>, <function <lambda> at 0x7ea3142a7a90>, <function <lambda> at 0x7ea3142a7090>, <function <lambda> at 0x7ea3142a7590>, <function <lambda> at 0x7ea3142a8530>, <function <lambda> at 0x7ea3142a85d0>, <function <lambda> at 0x7ea3142a7a90>, <function <lambda> at 0x7ea3142a7090>, <function <lambda> at 0x7ea3142a7590>, <function <lambda> at 0x7ea3142a8530>, <function <lambda> at 0x7ea3142a85d0>], (_, i) => (d) => `Opis silnika ${i + 1}: ${d.moc} KM, ${d.paliwo}`);
+    const opisyStanu = [<function <lambda> at 0x7ea3142a8670>, <function <lambda> at 0x7ea3142a8710>, <function <lambda> at 0x7ea3142a87b0>, <function <lambda> at 0x7ea3142a8850>, <function <lambda> at 0x7ea3142a88f0>, <function <lambda> at 0x7ea3142a8670>, <function <lambda> at 0x7ea3142a8710>, <function <lambda> at 0x7ea3142a87b0>, <function <lambda> at 0x7ea3142a8850>, <function <lambda> at 0x7ea3142a88f0>, <function <lambda> at 0x7ea3142a8670>, <function <lambda> at 0x7ea3142a8710>, <function <lambda> at 0x7ea3142a87b0>, <function <lambda> at 0x7ea3142a8850>, <function <lambda> at 0x7ea3142a88f0>, <function <lambda> at 0x7ea3142a8670>, <function <lambda> at 0x7ea3142a8710>, <function <lambda> at 0x7ea3142a87b0>, <function <lambda> at 0x7ea3142a8850>, <function <lambda> at 0x7ea3142a88f0>, <function <lambda> at 0x7ea3142a8670>, <function <lambda> at 0x7ea3142a8710>, <function <lambda> at 0x7ea3142a87b0>, <function <lambda> at 0x7ea3142a8850>, <function <lambda> at 0x7ea3142a88f0>, <function <lambda> at 0x7ea3142a8670>, <function <lambda> at 0x7ea3142a8710>, <function <lambda> at 0x7ea3142a87b0>, <function <lambda> at 0x7ea3142a8850>, <function <lambda> at 0x7ea3142a88f0>, <function <lambda> at 0x7ea3142a8670>, <function <lambda> at 0x7ea3142a8710>, <function <lambda> at 0x7ea3142a87b0>, <function <lambda> at 0x7ea3142a8850>, <function <lambda> at 0x7ea3142a88f0>, <function <lambda> at 0x7ea3142a8670>, <function <lambda> at 0x7ea3142a8710>, <function <lambda> at 0x7ea3142a87b0>, <function <lambda> at 0x7ea3142a8850>, <function <lambda> at 0x7ea3142a88f0>], (_, i) => (d) => `Stan ogólny (${i + 1}): ${d.stan.toLowerCase()}`);
+    const zakonczenia = [<function <lambda> at 0x7ea3142a8990>, <function <lambda> at 0x7ea3142a8a30>, <function <lambda> at 0x7ea3142a8ad0>, <function <lambda> at 0x7ea3142a8b70>, <function <lambda> at 0x7ea3142a8c10>, <function <lambda> at 0x7ea3142a8990>, <function <lambda> at 0x7ea3142a8a30>, <function <lambda> at 0x7ea3142a8ad0>, <function <lambda> at 0x7ea3142a8b70>, <function <lambda> at 0x7ea3142a8c10>, <function <lambda> at 0x7ea3142a8990>, <function <lambda> at 0x7ea3142a8a30>, <function <lambda> at 0x7ea3142a8ad0>, <function <lambda> at 0x7ea3142a8b70>, <function <lambda> at 0x7ea3142a8c10>, <function <lambda> at 0x7ea3142a8990>, <function <lambda> at 0x7ea3142a8a30>, <function <lambda> at 0x7ea3142a8ad0>, <function <lambda> at 0x7ea3142a8b70>, <function <lambda> at 0x7ea3142a8c10>, <function <lambda> at 0x7ea3142a8990>, <function <lambda> at 0x7ea3142a8a30>, <function <lambda> at 0x7ea3142a8ad0>, <function <lambda> at 0x7ea3142a8b70>, <function <lambda> at 0x7ea3142a8c10>, <function <lambda> at 0x7ea3142a8990>, <function <lambda> at 0x7ea3142a8a30>, <function <lambda> at 0x7ea3142a8ad0>, <function <lambda> at 0x7ea3142a8b70>, <function <lambda> at 0x7ea3142a8c10>, <function <lambda> at 0x7ea3142a8990>, <function <lambda> at 0x7ea3142a8a30>, <function <lambda> at 0x7ea3142a8ad0>, <function <lambda> at 0x7ea3142a8b70>, <function <lambda> at 0x7ea3142a8c10>, <function <lambda> at 0x7ea3142a8990>, <function <lambda> at 0x7ea3142a8a30>, <function <lambda> at 0x7ea3142a8ad0>, <function <lambda> at 0x7ea3142a8b70>, <function <lambda> at 0x7ea3142a8c10>], (_, i) => (d) => `Zakończenie ${i + 1}: Cena to ${d.cena} zł.`);
+
     function generuj() {
-      const marka = document.getElementById("marka").value;
-      const model = document.getElementById("model").value;
-      const rok = document.getElementById("rok").value;
-      const paliwo = document.getElementById("paliwo").value;
-      const przebieg = document.getElementById("przebieg").value;
-      const moc = document.getElementById("moc").value;
-      const skrzynia = document.getElementById("skrzynia").value;
-      const nadwozie = document.getElementById("nadwozie").value;
-      const kolor = document.getElementById("kolor").value;
-      const stan = document.getElementById("stan").value;
-      const cena = document.getElementById("cena").value;
-      const serwis = document.getElementById("serwis").value;
-      const styl = document.getElementById("styl").value;
+      const dane = {
+        marka: document.getElementById("marka").value,
+        model: document.getElementById("model").value,
+        rok: document.getElementById("rok").value,
+        paliwo: document.getElementById("paliwo").value,
+        przebieg: document.getElementById("przebieg").value,
+        moc: document.getElementById("moc").value,
+        skrzynia: document.getElementById("skrzynia").value,
+        nadwozie: document.getElementById("nadwozie").value,
+        kolor: document.getElementById("kolor").value,
+        stan: document.getElementById("stan").value,
+        cena: document.getElementById("cena").value,
+        serwis: document.getElementById("serwis").value,
+        rejestracja: document.getElementById("rejestracja").value,
+        pochodzenie: document.getElementById("pochodzenie").value,
+        wypadkowy: document.getElementById("wypadkowy").value,
+        wyposazenie: Array.from(document.querySelectorAll('.checkbox-group input[type="checkbox"]'))
+          .filter(cb => cb.checked)
+          .map(cb => cb.value)
+      };
 
-      const checkboxy = document.querySelectorAll('.checkbox-group input[type="checkbox"]');
-      const wyposazenie = Array.from(checkboxy)
-        .filter(cb => cb.checked)
-        .map(cb => cb.value);
-
-      let tekst = "";
-
-      if (styl === "standard") {
-        tekst = `**${marka} ${model}, ${rok}, ${paliwo}, ${przebieg} km**
-
-Na sprzedaż ${marka} ${model} (${nadwozie.toLowerCase()}) z ${rok} roku, kolor: ${kolor}.  
-Silnik ${moc} KM, ${paliwo.toLowerCase()}, skrzynia ${skrzynia.toLowerCase()}.  
-Stan: ${stan.toLowerCase()}.
-
-${wyposazenie.length ? 'Wyposażenie: ' + wyposazenie.join(', ') + '.' : ''}
-${serwis ? 'Serwis: ' + serwis + '.' : ''}
-
-Cena: **${cena} zł**  
-Możliwość negocjacji.`;
-      } else if (styl === "profesjonalny") {
-        tekst = `${marka} ${model} z ${rok} roku – wersja ${nadwozie}, kolor: ${kolor}, w bardzo dobrym stanie technicznym i wizualnym.  
-Auto wyposażone w ${moc} KM silnik ${paliwo.toLowerCase()}, skrzynia ${skrzynia.toLowerCase()}, przebieg ${przebieg} km.
-
-Na pokładzie m.in.: ${wyposazenie.join(', ') || 'podstawowe wyposażenie'}.  
-${serwis ? 'Historia serwisowa: ' + serwis + '.' : ''}
-
-Propozycja ceny: ${cena} zł – zapraszam do kontaktu.`;
-      } else if (styl === "emocjonalny") {
-        tekst = `Sprzedaję ukochane auto – ${marka} ${model}, które wiernie służyło mi od ${rok} roku.  
-To niezawodny kompan podróży, z silnikiem ${moc} KM (${paliwo}), przebiegiem ${przebieg} km i ${skrzynia.toLowerCase()} skrzynią.
-
-Auto w ${stan.toLowerCase()}m stanie, gotowe do nowych przygód.  
-Ma ${nadwozie.toLowerCase()} nadwozie w pięknym kolorze: ${kolor}.  
-${wyposazenie.length ? 'Wyposażone m.in. w: ' + wyposazenie.join(', ') + '.' : ''}
-${serwis ? 'Dbane na bieżąco – ' + serwis + '.' : ''}
-
-Cena: ${cena} zł – do negocjacji dla zdecydowanego kupca.`;
-      }
+      const tekst = [
+        `**${dane.marka} ${dane.model}, ${dane.rok}, ${dane.paliwo}, ${dane.przebieg} km**`,
+        `${losuj(naglowki)} - ${dane.marka} ${dane.model} (${dane.nadwozie}), kolor: ${dane.kolor}.`,
+        losuj(opisySilnika)(dane),
+        losuj(opisyStanu)(dane),
+        `Wyposażenie: ${dane.wyposazenie.join(', ') || 'brak danych'}.`,
+        dane.serwis ? `Serwis: ${dane.serwis}.` : '',
+        `Pochodzenie: ${dane.pochodzenie}, ${dane.wypadkowy.toLowerCase()}.`,
+        `Pierwsza rejestracja: ${dane.rejestracja}.`,
+        losuj(zakonczenia)(dane)
+      ].join("\n\n");
 
       document.getElementById("wynik").value = tekst;
     }
